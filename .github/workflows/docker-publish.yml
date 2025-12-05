@@ -49,7 +49,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
           labels: |
             maintainer="AnchialC"
-            org.opencontainers.image.title="DockPorts"
+            org.opencontainers.image.title="dockportsrb"
             org.opencontainers.image.description="容器端口监控和可视化工具"
             org.opencontainers.image.version={{version}}
             org.opencontainers.image.revision={{sha}}
