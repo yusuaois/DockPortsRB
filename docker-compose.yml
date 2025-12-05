@@ -2,15 +2,27 @@ version: '3.8'
 
 services:
   dockports:
-    image: crpi-xg6dfmt5h2etc7hg.cn-hangzhou.personal.cr.aliyuncs.com/cherry4nas/dockports:latest # 国内镜像
-    # image: ghcr.io/coracoo/dockports:latest # github镜像
+    image: ghcr.io/yusuaois/dockports:latest
     container_name: dockports
+    # 使用 host 网络模式，以便容器可以直接访问宿主机的网络
     network_mode: host
     volumes:
+      # 允许容器通过 Docker socket 获取容器列表
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      # 持久化配置文件
       - ./config:/app/config
     environment:
-      - DOCKPORTS_PORT=7577  # 可修改此端口以避免冲突
-    # 如果需要使用命令行参数，可以取消注释下面的行
-    # command: ["--port", "8080", "--debug"]
+      - DOCKPORTS_PORT=7577
+      # BCRYPT 密码加密密钥
+      - SECRET_KEY=${SECRET_KEY:-default-insecure-secret-change-me}
+      # 默认管理员账号
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin123
+      - TZ=Asia/Shanghai
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7577/api/auth/check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

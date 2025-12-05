@@ -1,4 +1,6 @@
-FROM python:3.11-slim
+# 镜像站
+FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/python:3.11-slim
+# FROM python:3.11-slim
 
 # 设置工作目录
 WORKDIR /app
