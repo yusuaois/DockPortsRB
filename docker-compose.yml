@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   dockports:
-    image: ghcr.io/yusuaois/dockports:latest
-    container_name: dockports
+    image: ghcr.io/yusuaois/dockportsrb:latest
+    container_name: dockportsrb
     # 使用 host 网络模式，以便容器可以直接访问宿主机的网络
     network_mode: host
     volumes:
