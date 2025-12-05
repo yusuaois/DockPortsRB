@@ -24,3 +24,33 @@
 - 卡片式端口展示
 - 实时统计信息
 - 响应式布局
+
+## ⭐ 推荐用法
+
+### Docker-Compose
+
+```
+version: '3.8'
+
+services:
+  dockports:
+    image: ghcr.io/yusuaois/dockportsrb:latest
+    container_name: dockportsrb
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config:/app/config
+    environment:
+      - DOCKPORTS_PORT=7577
+      - SECRET_KEY=default       # 自定义Bcrypt加密密钥
+      - ADMIN_USERNAME=admin     # 自己的管理员帐号
+      - ADMIN_PASSWORD=admin123  # 自己的管理员密码
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7577/api/auth/check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+```
